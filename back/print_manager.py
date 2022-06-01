@@ -12,13 +12,14 @@ class Logger:
             level=logging.INFO,
         )
 
-    def mprint(self, message):
+    def mprint(self, message, print_std=True):
 
         logging.info(message)
 
-        try:
-            print(message)
-            sys.stdout.flush()
+        if print_std:
+            try:
+                print(message)
+                sys.stdout.flush()
 
-        except Exception as e:
-            pass
+            except Exception as e:
+                pass

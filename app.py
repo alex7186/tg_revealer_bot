@@ -36,12 +36,14 @@ async def process_start_command(message: types.Message):
 
 @dp.message_handler()
 async def process_answer(message: types.Message):
-    logger.mprint(f"INCOME : from {message.from_user.id} ::: {message.text}")
+    logger.mprint(
+        f"INCOME : from {message.from_user.id} ::: {message.text}", print_std=False
+    )
 
     s = text("Ваш telergam ID :", code(message.from_user.id), sep="\n\n")
     await bot.send_message(message.from_user.id, s)
 
-    logger.mprint(APP_NAME + f" : reacted to {message.from_user.id}")
+    logger.mprint(APP_NAME + f" : reacted to {message.from_user.id}", print_std=False)
 
 
 if __name__ == "__main__":
