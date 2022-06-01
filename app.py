@@ -7,7 +7,7 @@ from aiogram.utils.markdown import text, code
 from back.config_manager import get_config
 from back.token_manager import get_token
 from back.telegram_manager import generate_bot_dp
-from back.print_manager import mprint
+from back.print_manager import Logger
 
 
 SCRIPT_PATH = "/".join(os.path.realpath(__file__).split("/")[:-1])
@@ -17,6 +17,8 @@ TG_TOKEN = get_token(SCRIPT_PATH)
 APP_NAME = CONFIG["APP_NAME"]
 
 bot, dp = generate_bot_dp(TG_TOKEN)
+
+logger = Logger(SCRIPT_PATH)
 
 
 @dp.message_handler(commands=["start"])
@@ -34,13 +36,14 @@ async def process_start_command(message: types.Message):
 
 @dp.message_handler()
 async def process_answer(message: types.Message):
+    logger.mprint(f"INCOME : from {message.from_user.id} ::: {message.text}")
 
     s = text("Ваш telergam ID :", code(message.from_user.id), sep="\n\n")
-
     await bot.send_message(message.from_user.id, s)
-    mprint(APP_NAME + f" : reacted to {message.from_user.id}")
+
+    logger.mprint(APP_NAME + f" : reacted to {message.from_user.id}")
 
 
 if __name__ == "__main__":
-    mprint(APP_NAME + " : bot started")
+    logger.mprint(APP_NAME + " : bot started")
     executor.start_polling(dp)
