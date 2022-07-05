@@ -44,15 +44,16 @@ push-force:
 	@echo "\n✅  done!"
 	
 copy-service:
-	@echo "\n⚙️  moving service to $(_service-path)\n"
+	@echo "\n⚙️  moving service to $(_service-path)"
 	@sudo cp $(_path)/service/$(app_name).service $(_service-path)/$(app_name).service
-	@echo "\n⚙️  enabling service \n"
+	@echo "\n⚙️  enabling service"
 	-@systemctl --user daemon-reload
 	-@systemctl --user enable $(app_name)
 	@echo "\n✅  done!"
 
 cat-service:
-	@systemctl --user cat $(app_name)
+	@# @systemctl --user cat $(app_name)
+	@python3 service_comparer.py
 
 cat-log:
 	@journalctl --user --unit=$(app_name)

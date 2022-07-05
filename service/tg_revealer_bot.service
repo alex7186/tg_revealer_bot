@@ -1,14 +1,16 @@
 [Unit]
-After=network.target  
-Wants=network.target
+Description=tg_revealer_bot
+Wants=network-online.target
+After=network-online.target
 
 [Service]
 Type=simple
 ExecStart=/bin/sh /home/pi/scripts/tg_revealer_bot/service/starter.sh
 WorkingDirectory=/home/pi/scripts/tg_revealer_bot
 Restart=always
-# StandardOutput=journal+console
+RestartSec=3
+RemainAfterExit=yes
 StandardOutput=inherit
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=basic.target
